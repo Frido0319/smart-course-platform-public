@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Course Platform Demo</title>
+    <meta
+      name="description"
+      content="A protected course delivery template with activation codes, device binding, admin console, Next.js, Supabase, and Vercel."
+    />
+    <style>
+      :root {
+        --ink: #18212f;
+        --muted: #667085;
+        --line: #d8dee8;
+        --panel: #ffffff;
+        --paper: #f5f7fa;
+        --teal: #0f766e;
+        --teal-dark: #115e59;
+        --blue: #2458d3;
+        --amber: #b7791f;
+        --red: #b42318;
+        --green-soft: #e8f7f2;
+        --blue-soft: #edf3ff;
+        --amber-soft: #fff7e6;
+        --red-soft: #fff1f0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(180deg, #ffffff 0%, #f7f9fc 44%, #eef3f4 100%);
+        font-family:
+          "Segoe UI",
+          "Aptos",
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 0 auto;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 900;
+      }
+
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid #9dd2cb;
+        border-radius: 8px;
+        color: #fff;
+        background: var(--teal);
+        box-shadow: 0 8px 18px rgba(15, 118, 110, 0.18);
+      }
+
+      .navlinks {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 750;
+      }
+
+      .navlinks a:hover {
+        color: var(--teal);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(460px, 1.08fr);
+        gap: 34px;
+        align-items: center;
+        min-height: 660px;
+        padding: 20px 0 42px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--teal);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin-bottom: 16px;
+        font-size: clamp(42px, 5vw, 70px);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 16px;
+        color: var(--ink);
+        background: #fff;
+        font-size: 14px;
+        font-weight: 900;
+        box-shadow: 0 10px 22px rgba(24, 33, 47, 0.06);
+      }
+
+      .button.primary {
+        border-color: var(--teal);
+        color: #fff;
+        background: var(--teal);
+      }
+
+      .button.primary:hover {
+        background: var(--teal-dark);
+      }
+
+      .hero-screen {
+        border: 1px solid #cfd8e6;
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--panel);
+        box-shadow: 0 24px 70px rgba(24, 33, 47, 0.14);
+      }
+
+      .window-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 44px;
+        border-bottom: 1px solid var(--line);
+        padding: 0 14px;
+        background: #fbfcfe;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 99px;
+        background: #c9d2df;
+      }
+
+      .dot:nth-child(1) {
+        background: #ef767a;
+      }
+
+      .dot:nth-child(2) {
+        background: #f2c14e;
+      }
+
+      .dot:nth-child(3) {
+        background: #43aa8b;
+      }
+
+      .workflow {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        min-height: 430px;
+      }
+
+      .workflow-side {
+        border-right: 1px solid var(--line);
+        padding: 22px;
+        background: #f8fafc;
+      }
+
+      .workflow-main {
+        display: grid;
+        gap: 14px;
+        padding: 22px;
+      }
+
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .metric,
+      .flow-card,
+      .app-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .metric {
+        padding: 12px;
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 21px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .flow-card {
+        display: grid;
+        gap: 11px;
+        padding: 15px;
+      }
+
+      .flow-step {
+        display: grid;
+        grid-template-columns: 28px 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .number {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        color: #fff;
+        background: var(--teal);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        border-radius: 99px;
+        padding: 3px 9px;
+        border: 1px solid #b7eadb;
+        color: #047857;
+        background: var(--green-soft);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .badge.blue {
+        border-color: #b9cdfd;
+        color: var(--blue);
+        background: var(--blue-soft);
+      }
+
+      .badge.amber {
+        border-color: #f1d492;
+        color: var(--amber);
+        background: var(--amber-soft);
+      }
+
+      .section {
+        padding: 42px 0;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: end;
+        margin-bottom: 18px;
+      }
+
+      .section-head h2 {
+        margin-bottom: 6px;
+        font-size: 30px;
+      }
+
+      .section-head p {
+        max-width: 680px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .surface-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .surface {
+        min-height: 470px;
+        padding: 16px;
+        border: 1px solid #cfd8e6;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 16px 42px rgba(24, 33, 47, 0.08);
+      }
+
+      .surface-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .surface-title h3 {
+        margin-bottom: 0;
+      }
+
+      .app-card {
+        padding: 14px;
+      }
+
+      .stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+        color: #344054;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .input {
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 12px;
+        background: #fff;
+        color: #475467;
+        font-weight: 700;
+      }
+
+      .mock-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        border-radius: 8px;
+        padding: 9px 12px;
+        color: #fff;
+        background: var(--teal);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .hint {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .table {
+        display: grid;
+        gap: 8px;
+      }
+
+      .table-row {
+        display: grid;
+        grid-template-columns: 1.1fr 0.7fr 0.7fr;
+        gap: 8px;
+        align-items: center;
+        border: 1px solid #edf1f7;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 12px;
+      }
+
+      .table-head {
+        color: #475467;
+        background: #f8fafc;
+        font-weight: 900;
+      }
+
+      .code {
+        display: inline-flex;
+        width: fit-content;
+        border: 1px solid #c7d2fe;
+        border-radius: 7px;
+        padding: 5px 8px;
+        color: #1e3a8a;
+        background: #eef2ff;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .course-layout {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        min-height: 334px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .course-menu {
+        padding: 12px;
+        border-right: 1px solid var(--line);
+        background: #f8fafc;
+      }
+
+      .menu-item {
+        margin-bottom: 8px;
+        border-radius: 7px;
+        padding: 8px;
+        color: #475467;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .menu-item.active {
+        color: var(--teal);
+        background: #e9f7f5;
+      }
+
+      .course-content {
+        min-width: 0;
+        padding: 14px;
+      }
+
+      .course-content h2,
+      .course-content p,
+      .course-content .hint,
+      .course-content strong {
+        overflow-wrap: anywhere;
+      }
+
+      .bars {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .bar {
+        height: 10px;
+        border-radius: 99px;
+        background: #dbe4f0;
+      }
+
+      .bar.short {
+        width: 62%;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .callout {
+        border: 1px solid #a9d8d1;
+        border-radius: 8px;
+        padding: 18px;
+        background: #f0fbf9;
+      }
+
+      .callout h3 {
+        margin-bottom: 8px;
+      }
+
+      .callout p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .code-block {
+        overflow: auto;
+        border: 1px solid #d0d7e2;
+        border-radius: 8px;
+        padding: 16px;
+        background: #111827;
+        color: #d6e2f0;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        border-top: 1px solid var(--line);
+        margin-top: 28px;
+        padding: 24px 0 36px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .workflow,
+        .split {
+          grid-template-columns: 1fr;
+        }
+
+        .workflow-side {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .surface-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .nav,
+        .section-head,
+        .footer {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .navlinks {
+          flex-wrap: wrap;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        h1 {
+          font-size: 42px;
+        }
+
+        .metric-row,
+        .course-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .course-menu {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page nav">
+      <a class="brand" href="#top" aria-label="Smart Course Platform home">
+        <span class="mark">S</span>
+        <span>Smart Course Platform</span>
+      </a>
+      <nav class="navlinks" aria-label="Demo navigation">
+        <a href="#screens">Screens</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#run">Run locally</a>
+        <a href="https://github.com/Frido0319/smart-course-platform-public">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top" class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Next.js + Supabase + Vercel</p>
+          <h1>Smart Course Platform</h1>
+          <p class="hero-copy">
+            A protected course delivery template with activation codes, device binding, admin console,
+            protected course routes, and private media delivery.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/Frido0319/smart-course-platform-public">View on GitHub</a>
+            <a class="button" href="DEPLOYMENT.md">Deployment docs</a>
+          </div>
+        </div>
+
+        <section class="hero-screen" aria-label="Product workflow preview">
+          <div class="window-bar">
+            <div class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <span>/activate -> /course/smart-manufacturing</span>
+          </div>
+          <div class="workflow">
+            <aside class="workflow-side">
+              <p class="eyebrow">Access Control</p>
+              <h2>Student access is checked before HTML or media is served.</h2>
+              <p class="hint">
+                The public repository ships a compact demo shell. Private paid media stays outside Git and can be
+                uploaded to protected Supabase Storage.
+              </p>
+            </aside>
+            <div class="workflow-main">
+              <div class="metric-row">
+                <div class="metric"><strong>1</strong><span>device per active code</span></div>
+                <div class="metric"><strong>3</strong><span>protected course APIs</span></div>
+                <div class="metric"><strong>5</strong><span>admin operations</span></div>
+              </div>
+              <div class="flow-card">
+                <div class="flow-step">
+                  <span class="number">1</span>
+                  <strong>Student submits activation code</strong>
+                  <span class="badge blue">POST</span>
+                </div>
+                <div class="flow-step">
+                  <span class="number">2</span>
+                  <strong>Server validates status and device id</strong>
+                  <span class="badge amber">hash</span>
+                </div>
+                <div class="flow-step">
+                  <span class="number">3</span>
+                  <strong>Protected course shell loads after session check</strong>
+                  <span class="badge">authorized</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="screens" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Product Surface</p>
+            <h2>Three screens that show the project clearly</h2>
+          </div>
+          <p>
+            These static previews mirror the repository features without exposing real course assets,
+            production credentials, or the private deployment.
+          </p>
+        </div>
+
+        <div class="surface-grid">
+          <article class="surface" data-shot="activation">
+            <div class="surface-title">
+              <h3>Student activation</h3>
+              <span class="badge blue">Student</span>
+            </div>
+            <div class="stack">
+              <div class="app-card">
+                <p class="eyebrow">Activation</p>
+                <h2>Enter activation code</h2>
+                <p class="hint">First successful use binds the code to the current browser device.</p>
+              </div>
+              <div class="app-card stack">
+                <label class="field">
+                  Activation code
+                  <span class="input">ABCD-1234-EFGH</span>
+                </label>
+                <p class="hint">Current device ID: 7f4a9d2c18e5b...</p>
+                <span class="mock-button">Activate course</span>
+              </div>
+              <div class="callout">
+                <h3>Why it matters</h3>
+                <p>Static course links are replaced by server-checked access and a short-lived session.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="surface" data-shot="admin">
+            <div class="surface-title">
+              <h3>Admin console</h3>
+              <span class="badge">Admin</span>
+            </div>
+            <div class="stack">
+              <div class="app-card stack">
+                <label class="field">
+                  Admin password
+                  <span class="input">ADMIN_PASSWORD</span>
+                </label>
+                <span class="mock-button">Generate codes</span>
+              </div>
+              <div class="table">
+                <div class="table-row table-head"><span>Code</span><span>Status</span><span>Action</span></div>
+                <div class="table-row"><span class="code">K7M9-Q2RA</span><span class="badge">Active</span><span>Reset</span></div>
+                <div class="table-row"><span class="code">P3Q8-L6TZ</span><span class="badge amber">Unused</span><span>Disable</span></div>
+                <div class="table-row"><span>Hash-only</span><span class="badge" style="color: var(--red); border-color: #f6b7b0; background: var(--red-soft)">Disabled</span><span>Delete</span></div>
+              </div>
+              <p class="hint">Generate, list, reset device binding, disable, and delete activation codes.</p>
+            </div>
+          </article>
+
+          <article class="surface" data-shot="course">
+            <div class="surface-title">
+              <h3>Protected course shell</h3>
+              <span class="badge amber">Course</span>
+            </div>
+            <div class="course-layout">
+              <aside class="course-menu">
+                <div class="menu-item active">Overview</div>
+                <div class="menu-item">PDF index</div>
+                <div class="menu-item">Exercises</div>
+                <div class="menu-item">Media</div>
+              </aside>
+              <div class="course-content">
+                <p class="eyebrow">Course</p>
+                <h2>Protected Course Shell</h2>
+                <p class="hint">Protected HTML loads inside the course frame after authorization.</p>
+                <div class="bars">
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                  <div class="bar short"></div>
+                </div>
+                <div class="app-card" style="margin-top: 16px">
+                  <strong>Private media route</strong>
+                  <p class="hint">/api/course/asset/page-001.png</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="architecture" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Architecture</p>
+            <h2>Small enough to read, complete enough to reuse</h2>
+          </div>
+        </div>
+        <div class="split">
+          <div class="callout">
+            <h3>Protected path</h3>
+            <p>
+              Student pages call server APIs. The server validates activation state, device id, session cookie,
+              course id, and expiration before returning course HTML or media.
+            </p>
+          </div>
+          <div class="callout">
+            <h3>Admin path</h3>
+            <p>
+              Admin routes require an admin password header and expose operational workflows for activation-code
+              management without placing credentials in client-side code.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="run" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Run Locally</p>
+            <h2>Start the public template</h2>
+          </div>
+        </div>
+        <pre class="code-block"><code>npm install
+cp .env.example .env.local
+npm run dev -- --port 3050
+
+# checks
+npm run test:course
+npm run lint
+npm run build</code></pre>
+      </section>
+    </main>
+
+    <footer class="page footer">
+      <span>Smart Course Platform public demo</span>
+      <a href="https://github.com/Frido0319/smart-course-platform-public">github.com/Frido0319/smart-course-platform-public</a>
+    </footer>
+  </body>
+</html>

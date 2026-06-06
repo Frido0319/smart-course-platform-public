@@ -1,8 +1,16 @@
 # Smart Course Platform
 
-Activation-code protected course delivery built with Next.js, Supabase, and Vercel.
+A protected course delivery template with activation codes, device binding, admin console, Next.js, Supabase, and Vercel.
+
+[Live static demo](https://frido0319.github.io/smart-course-platform-public/) · [Admin docs](docs/ADMIN.md) · [Deployment docs](docs/DEPLOYMENT.md)
 
 This repository is a public, slimmed-down version of a paid interactive course platform. It keeps the application architecture, admin workflow, protected course routes, deployment notes, and a small demo course shell. Private paid course media, extracted PDF page images, and full course datasets are intentionally excluded.
+
+## Preview
+
+| Student activation | Admin console | Protected course shell |
+| --- | --- | --- |
+| ![Student activation screen](docs/assets/activation.png) | ![Admin console screen](docs/assets/admin.png) | ![Protected course shell screen](docs/assets/course.png) |
 
 ## What It Does
 
@@ -13,6 +21,13 @@ This repository is a public, slimmed-down version of a paid interactive course p
 - Rewrites course media paths to `/api/course/asset/...` and checks authorization before serving media.
 - Provides a full admin console for generating, listing, resetting device bindings, disabling, and deleting activation codes.
 - Stores activation state and access logs in Supabase.
+
+## Why This Is Useful
+
+- Course creators can avoid shipping paid course assets as public static files.
+- Students get a simple activation-code flow instead of a full account system.
+- Admins get practical operations for code generation, revocation, device reset, and cleanup.
+- The public template stays small while documenting how private media can live outside Git.
 
 ## Admin Console
 
