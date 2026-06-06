@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Manufacturing Foundations Demo</title>
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --ink: #162033;
+      --muted: #65758b;
+      --line: #d8e1ea;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --blue: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    .course-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 18px 0 42px;
+    }
+    .side-nav {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px);
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--panel);
+    }
+    .side-nav h2 {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+    .side-nav a {
+      display: block;
+      border-radius: 6px;
+      padding: 8px 9px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .side-nav a:hover { background: #eef7f6; color: var(--accent); }
+    .content { display: grid; gap: 16px; }
+    .hero,
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 18px;
+    }
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(37, 99, 235, 0.08)),
+        #fff;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { margin: 0 0 10px; line-height: 1.25; }
+    p { margin: 0 0 10px; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mini-panel {
+      border: 1px solid #e3eaf2;
+      border-radius: 8px;
+      padding: 13px;
+      background: #fbfcfe;
+    }
+    .demo-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .demo-page {
+      min-height: 260px;
+      border: 1px solid #cfd9e5;
+      border-radius: 8px;
+      padding: 14px;
+      background:
+        repeating-linear-gradient(0deg, #fff 0 22px, #f4f7fb 22px 23px);
+    }
+    .demo-page strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--blue);
+    }
+    .answer {
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: #eef7f6;
+      color: #164e47;
+      font-weight: 700;
+    }
+    code {
+      border: 1px solid #c7d2fe;
+      border-radius: 5px;
+      padding: 2px 5px;
+      background: #eef2ff;
+      color: #1e3a8a;
+      font-weight: 800;
+    }
+    @media (max-width: 820px) {
+      .course-layout { grid-template-columns: 1fr; }
+      .side-nav { position: static; height: auto; }
+      .grid, .demo-board { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="course-layout">
+    <nav class="side-nav" aria-label="Course sections">
+      <h2>Demo Course</h2>
+      <a href="#overview">Overview</a>
+      <a href="#bilingual-reading">Bilingual Reading</a>
+      <a href="#exercise-review">Exercise Review</a>
+      <a href="#asset-protection">Asset Protection</a>
+    </nav>
+
+    <section class="content">
+      <header id="overview" class="hero">
+        <p class="eyebrow">Protected HTML Demo</p>
+        <h1>Smart Manufacturing Foundations</h1>
+        <p>
+          This public repository includes a compact demonstration course shell. The production course content,
+          paid source PDFs, extracted page images, and full question datasets are intentionally excluded.
+        </p>
+      </header>
+
+      <section id="bilingual-reading" class="card">
+        <h2>Bilingual Reading Pattern</h2>
+        <p>
+          The private product renders original German course pages beside localized Chinese reading notes.
+          This demo keeps the structure without shipping proprietary course material.
+        </p>
+        <div class="demo-board">
+          <article class="demo-page">
+            <strong>Original source page placeholder</strong>
+            <p>Fertigungsverfahren classify manufacturing processes by how material shape is created or changed.</p>
+            <p>In production, this panel would reference a protected image such as <code>source_pages/...</code>.</p>
+          </article>
+          <article class="demo-page">
+            <strong>Localized reading placeholder</strong>
+            <p>Localized reading notes would explain terminology, figure labels, formulas, and exam-relevant concepts.</p>
+            <p>The protected media route rewrites local paths to <code>/api/course/asset/...</code>.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="exercise-review" class="card">
+        <h2>Exercise Review Pattern</h2>
+        <div class="grid">
+          <article class="mini-panel">
+            <h3>Question</h3>
+            <p>Which layer validates whether a student can access protected course content?</p>
+          </article>
+          <article class="mini-panel">
+            <h3>Answer</h3>
+            <p class="answer">The server API validates the HTTP-only session, activation code, course id, and device id.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="asset-protection" class="card">
+        <h2>Asset Protection</h2>
+        <p>
+          Course media belongs in private Supabase Storage. The Git repository keeps only application code,
+          documentation, and small examples so the project remains reviewable and safe to publish.
+        </p>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

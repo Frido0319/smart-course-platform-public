@@ -1,0 +1,32 @@
+{
+  "name": "smart-course-platform",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "restart:local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/restart-all.ps1",
+    "lint": "eslint",
+    "test:course": "node --test scripts/test-course-content-utils.mjs scripts/test-activation-policy.mjs",
+    "upload:smart-assets": "node scripts/upload-smart-course-assets.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.106.1",
+    "jose": "^6.2.3",
+    "next": "16.2.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "server-only": "^0.0.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "playwright": "^1.60.0",
+    "typescript": "^5"
+  }
+}
