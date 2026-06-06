@@ -2,7 +2,13 @@
 
 A protected course delivery template with activation codes, device binding, admin console, Next.js, Supabase, and Vercel.
 
-[Live static demo](https://frido0319.github.io/smart-course-platform-public/) · [Admin docs](docs/ADMIN.md) · [Deployment docs](docs/DEPLOYMENT.md)
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-0f766e?style=flat-square)](https://frido0319.github.io/smart-course-platform-public/)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
+![Supabase](https://img.shields.io/badge/Supabase-ready-3ecf8e?style=flat-square)
+![Vercel](https://img.shields.io/badge/Vercel-ready-000000?style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square)
+
+[Live static demo](https://frido0319.github.io/smart-course-platform-public/) | [Admin docs](docs/ADMIN.md) | [Deployment docs](docs/DEPLOYMENT.md) | [Promotion copy](docs/PROMOTION.md)
 
 This repository is a public, slimmed-down version of a paid interactive course platform. It keeps the application architecture, admin workflow, protected course routes, deployment notes, and a small demo course shell. Private paid course media, extracted PDF page images, and full course datasets are intentionally excluded.
 
